@@ -1,0 +1,19 @@
+{
+  "en": {
+    "tier1": [
+      "kill", "murder", "stabbing", "fire", "blood", "bomb",
+      "kidnap", "rape", "help me", "save me", "dying", "attack",
+      "shooting", "gun", "weapon", "please save", "being killed"
+    ],
+    "tier2": [
+      "police", "ambulance", "hospital", "injury", "accident",
+      "theft", "robbery", "threat", "assault", "domestic violence",
+      "beating", "hitting", "hurting"
+    ],
+    "tier3": [
+      "problem", "complaint", "issue", "road", "pothole",
+      "water", "electricity", "garbage", "corruption", "bribe",
+      "not working", "broken", "damaged"
+    ]
+  }
+}

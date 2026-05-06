@@ -1,0 +1,19 @@
+{
+  "hi": {
+    "tier1": [
+      "bachao", "bachao bachao", "maar raha hai", "maar daalega", "chaku",
+      "khoon", "aag", "bomb", "kidnap", "rape", "madad karo", "help karo",
+      "goli", "maut", "sahaya", "मारो मत", "बचाओ", "मदद करो"
+    ],
+    "tier2": [
+      "police", "ambulance", "hospital", "chori", "dhamki",
+      "rishwat", "zulm", "hamla", "attack", "darr",
+      "peetna", "maarna", "ghar mein maarta hai"
+    ],
+    "tier3": [
+      "problem", "shikayat", "pareshani", "sadak", "bijli",
+      "pani", "ganda", "safai", "complaint", "mushkil",
+      "nahi ho raha", "kuch karo"
+    ]
+  }
+}

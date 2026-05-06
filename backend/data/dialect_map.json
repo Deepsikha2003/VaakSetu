@@ -1,0 +1,37 @@
+{
+  "dialect_zones": {
+    "north_karnataka": {
+      "region": "Dharwad, Belgaum, Hubli",
+      "characteristic": "Uses 'ri' suffix, distinct vocabulary",
+      "examples": {
+        "come quickly": "ಬರ್ರಿ ಬೇಗ",
+        "hitting me": "ಹೊಡಿತಾರ್ರಿ",
+        "leave me": "ಬಿಡ್ರಿ"
+      }
+    },
+    "coastal": {
+      "region": "Mangalore, Udupi",
+      "characteristic": "Tulu influence, distinct pronunciation",
+      "examples": {
+        "hitting": "ಬಡಿತ್ತ್",
+        "dying": "ಸಾಯ್ತೆ"
+      }
+    },
+    "old_mysore": {
+      "region": "Mysore, Mandya, Hassan",
+      "characteristic": "Standard Kannada base",
+      "examples": {
+        "hitting me": "ಹೊಡೀತಾನೆ",
+        "come quickly": "ಬೇಗ ಬನ್ನಿ"
+      }
+    },
+    "hyderabad_karnataka": {
+      "region": "Gulbarga, Raichur, Bidar",
+      "characteristic": "Urdu/Deccani influence",
+      "examples": {
+        "hitting": "ಹೊಡಿತಾರ",
+        "come": "ಬರ್ರಿ"
+      }
+    }
+  }
+}

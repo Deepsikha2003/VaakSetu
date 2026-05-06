@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Database
+*.db
+*.sqlite3
+
+# Audio cache
+backend/audio_cache/
+*.wav
+*.mp3
+!demo/*.mp3
+
+# Whisper models
+*.pt
+
+# OS
+.DS_Store
+Thumbs.db

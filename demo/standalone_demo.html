@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VaakSetu — 1092 Helpline AI Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e1a;--card:#1a1f35;--card2:#232845;--blue:#3b82f6;--cyan:#06b6d4;--purple:#8b5cf6;--green:#10b981;--red:#ef4444;--orange:#f97316;--yellow:#eab308;--text:#f1f5f9;--muted:#64748b;--border:rgba(148,163,184,0.1)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:linear-gradient(135deg,#111827,var(--card));border-bottom:1px solid var(--border)}
+.logo{font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{font-size:.7rem;color:var(--muted);margin-left:12px}
+.badge{padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:600;background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.2)}
+.grid{display:grid;grid-template-columns:260px 1fr 300px;height:calc(100vh - 52px);overflow:hidden}
+.panel{border-right:1px solid var(--border);overflow-y:auto}
+.panel:last-child{border:none}
+.ph{padding:14px 16px;border-bottom:1px solid var(--border);background:#111827;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94a3b8}
+.pc{padding:12px}
+.btn{display:block;width:100%;padding:10px;margin-bottom:8px;border:none;border-radius:10px;font-family:'Inter';font-size:.78rem;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.btn1{background:linear-gradient(135deg,var(--blue),var(--purple))}
+.btn2{background:linear-gradient(135deg,var(--orange),var(--red))}
+.btn3{background:linear-gradient(135deg,var(--purple),#ec4899)}
+.card{padding:12px;margin-bottom:8px;background:var(--card);border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.card:hover{border-color:var(--blue);transform:translateX(3px)}
+.card.active{border-color:var(--cyan);background:rgba(6,182,212,.08)}
+.card.critical{border-left:3px solid var(--red);animation:cpulse 2s infinite}
+@keyframes cpulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 20px rgba(239,68,68,.15)}}
+.cid{font-family:'JetBrains Mono';font-size:.7rem;color:var(--cyan);font-weight:600}
+.ubadge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:700;font-family:'JetBrains Mono'}
+.uc{background:rgba(239,68,68,.15);color:var(--red)}
+.ul{background:rgba(34,197,94,.15);color:var(--green)}
+.utcs-box{text-align:center;padding:24px;background:var(--card);border-radius:14px;border:1px solid var(--border);margin-bottom:14px}
+.utcs-box.crit{border-color:var(--red);animation:glow 1.5s infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 10px rgba(239,68,68,.1)}50%{box-shadow:0 0 40px rgba(239,68,68,.3)}}
+.score{font-family:'JetBrains Mono';font-size:3.5rem;font-weight:900;line-height:1}
+.slabel{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.slevel{font-size:1rem;font-weight:800;text-transform:uppercase;margin-top:4px}
+.streams{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.scard{padding:10px;background:var(--card);border-radius:8px;border:1px solid var(--border)}
+.scard h4{font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.kw{display:inline-block;padding:2px 6px;margin:2px;border-radius:4px;font-size:.65rem;font-weight:600}
+.kw1{background:rgba(239,68,68,.15);color:var(--red)}
+.kw2{background:rgba(249,115,22,.15);color:var(--orange)}
+.kw3{background:rgba(234,179,8,.15);color:var(--yellow)}
+.ebar{display:flex;align-items:center;gap:6px;margin:3px 0}
+.ebar .l{font-size:.65rem;color:#94a3b8;width:48px}
+.ebar .b{flex:1;height:5px;background:#111827;border-radius:3px;overflow:hidden}
+.ebar .bf{height:100%;border-radius:3px;transition:width .8s}
+.ebar .v{font-size:.6rem;font-family:'JetBrains Mono';color:var(--muted);width:28px;text-align:right}
+.tbox{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:14px;margin-bottom:14px}
+.tbox h3{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px}
+.ttext{font-size:.9rem;line-height:1.7;min-height:40px}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.aibox{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:14px;margin-bottom:14px}
+.aibox h3{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:10px}
+.af{margin-bottom:8px}
+.af-l{font-size:.65rem;font-weight:600;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.af-v{font-size:.8rem;padding:6px 10px;background:rgba(255,255,255,.03);border-radius:6px;border:1px solid var(--border)}
+.vbox{background:var(--card);border-radius:10px;border:1px solid rgba(6,182,212,.3);padding:14px;margin-bottom:14px}
+.vbox h3{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:10px}
+.vtext{font-size:.85rem;font-style:italic;padding:10px;background:rgba(6,182,212,.05);border-radius:6px;border-left:3px solid var(--cyan);margin-bottom:10px}
+.vbtns{display:flex;gap:8px}
+.vbtn{padding:7px 14px;border:none;border-radius:6px;font-family:'Inter';font-size:.78rem;font-weight:600;cursor:pointer;color:#fff}
+.vy{background:var(--green)}.vn{background:var(--red)}.vp{background:var(--yellow);color:#0f172a}
+.takeover{width:100%;padding:14px;border:none;border-radius:10px;font-family:'Inter';font-size:.9rem;font-weight:800;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--red),#dc2626);box-shadow:0 0 20px rgba(239,68,68,.25);margin-bottom:14px;letter-spacing:.5px}
+.takeover:hover{box-shadow:0 0 40px rgba(239,68,68,.4);transform:translateY(-2px)}
+.alert{display:flex;align-items:center;gap:12px;padding:10px 24px;background:linear-gradient(90deg,rgba(239,68,68,.15),rgba(239,68,68,.05));border-bottom:2px solid var(--red);animation:aslide .5s}
+@keyframes aslide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.alert-icon{font-size:1.2rem;animation:apulse 1s infinite}
+@keyframes apulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.alert-text{font-weight:700;color:var(--red);font-size:.8rem}
+.evt{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;margin-bottom:3px;border-radius:4px;font-size:.7rem;border-left:2px solid transparent}
+.evt.ec{border-left-color:var(--red);background:rgba(239,68,68,.05)}
+.evt.ei{border-left-color:var(--blue)}
+.et{font-family:'JetBrains Mono';color:var(--muted);font-size:.6rem;white-space:nowrap}
+.em{color:#94a3b8;flex:1}
+.tech{display:flex;align-items:center;gap:6px;padding:6px 10px;font-size:.7rem;color:#94a3b8}
+.tech .tn{font-weight:600;color:var(--text)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:center">
+    <span class="logo">🌉 VaakSetu</span>
+    <span class="subtitle">1092 Helpline AI • Standalone Demo</span>
+  </div>
+  <span class="badge">● Demo Mode</span>
+</div>
+
+<div id="alertArea"></div>
+
+<div class="grid">
+  <!-- LEFT -->
+  <div class="panel">
+    <div class="ph">📞 Demo Scenarios</div>
+    <div class="pc">
+      <button class="btn btn1" onclick="runScenario(1)">▶ Scenario 1: Language Bridge</button>
+      <button class="btn btn2" onclick="runScenario(2)">▶ Scenario 2: Keyword Emergency</button>
+      <button class="btn btn3" onclick="runScenario(3)">▶ Scenario 3: Silent Emergency</button>
+      <div id="callList"></div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="panel">
+    <div class="ph">🔬 Processing View — <span id="callIdHeader">Select a scenario</span></div>
+    <div class="pc" id="centerPanel">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;opacity:.5">
+        <div style="font-size:3rem;margin-bottom:16px">🌉</div>
+        <p style="font-size:1rem;font-weight:600">Click a scenario to begin</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="panel">
+    <div class="ph">📡 Live Feed</div>
+    <div class="pc">
+      <div id="alertFeed"></div>
+      <h4 style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:12px 0 6px">📋 Event Log</h4>
+      <div id="eventLog"></div>
+      <h4 style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:12px 0 6px">🛠️ Tech Stack</h4>
+      <div id="techStack"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const scenarios = {
+  1: {
+    name:'Language Bridge', callId:'CALL-DEMO01', caller:'+919876543210', lang:'kn', langLabel:'ಕನ್ನಡ Kannada',
+    dialect_zone:'old_mysore',
+    transcript:'ನಮಸ್ಕಾರ ಸಾರ್, ನಾನು ರಾಜಾಜಿನಗರದಲ್ಲಿ ಇದ್ದೀನಿ. ನಮ್ಮ ಏರಿಯಾದಲ್ಲಿ ರಸ್ತೆಯಲ್ಲಿ ದೊಡ್ಡ ಗುಂಡಿ ಬಿದ್ದಿದೆ, ಮೂರು ದಿನ ಆಯ್ತು ಯಾರೂ ಬಂದಿಲ್ಲ.',
+    keywords:[{kw:'ರಸ್ತೆ',tier:3},{kw:'ಗುಂಡಿ',tier:3}],
+    intent:'infrastructure → road_issue', summary:'Citizen reporting large pothole in Rajajinagar, unattended for 3 days.',
+    urgency:'medium', location:'Rajajinagar, Bengaluru', department:'BBMP/PWD', action:'Route to BBMP road maintenance',
+    emotion:{panic:5,fear:8,distress:15,calm:72},
+    utcs:{score:145,level:'LOW',color:'#22c55e'},
+    verification:'ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ, ನೀವು ರಾಜಾಜಿನಗರದಲ್ಲಿ ರಸ್ತೆ ಗುಂಡಿ ವರದಿ ಮಾಡುತ್ತಿದ್ದೀರಿ. ಇದು ಸರಿಯೇ?',
+    noise:null
+  },
+  2: {
+    name:'Keyword Emergency', callId:'CALL-DEMO02', caller:'+919876543211', lang:'hi', langLabel:'हिंदी Hindi',
+    dialect_zone:'hindi_belt',
+    transcript:'bachao bachao, wo mujhe maar raha hai! Please help karo, bahut darr lag raha hai. Police ko bulao!',
+    keywords:[{kw:'bachao',tier:1},{kw:'maar raha hai',tier:1},{kw:'help karo',tier:1},{kw:'darr',tier:2},{kw:'police',tier:2}],
+    intent:'emergency → immediate_danger', summary:'Citizen being beaten, requesting urgent police help.',
+    urgency:'critical', location:'Unknown', department:'Police + 108 Ambulance', action:'IMMEDIATE DISPATCH — Police + Ambulance',
+    emotion:{panic:92,fear:85,distress:88,calm:5},
+    utcs:{score:750,level:'CRITICAL',color:'#ef4444'},
+    verification:'मैं समझ गया, आप तत्काल खतरे में हैं। क्या यह सही है?',
+    noise:null
+  },
+  3: {
+    name:'Silent Emergency', callId:'CALL-DEMO03', caller:'+919876543212', lang:'en', langLabel:'English',
+    dialect_zone:'general',
+    transcript:'...help...',
+    keywords:[{kw:'help',tier:1}],
+    intent:'emergency → silent_emergency', summary:'Silent emergency — citizen barely able to speak.',
+    urgency:'critical', location:'Unknown', department:'Police + Emergency Response', action:'IMMEDIATE ATTENTION — Silent emergency protocol',
+    emotion:{panic:40,fear:60,distress:70,calm:10},
+    utcs:{score:620,level:'CRITICAL',color:'#ef4444'},
+    verification:'I understand you need immediate help. Is that correct?',
+    noise:{screaming:85,struggle:72,crying:45}
+  }
+};
+
+const tech = [
+  {i:'⚡',n:'FastAPI',d:'Backend'},
+  {i:'🎙️',n:'Whisper',d:'ASR'},
+  {i:'🧠',n:'Claude',d:'NLP'},
+  {i:'🔑',n:'Aho-Corasick',d:'Keywords'},
+  {i:'🎭',n:'OpenSMILE',d:'Emotion'},
+  {i:'🔊',n:'CNN',d:'Noise'},
+  {i:'🗣️',n:'Coqui TTS',d:'Speech'},
+  {i:'📞',n:'Twilio',d:'Voice'},
+  {i:'⚛️',n:'React',d:'Dashboard'},
+  {i:'📡',n:'WebSocket',d:'Real-time'}
+];
+
+// Render tech stack
+document.getElementById('techStack').innerHTML = tech.map(t =>
+  `<div class="tech"><span>${t.i}</span><span class="tn">${t.n}</span><span style="margin-left:auto;font-size:.6rem;color:var(--muted)">${t.d}</span></div>`
+).join('');
+
+let typingInterval = null;
+
+function runScenario(id) {
+  const s = scenarios[id];
+  if (!s) return;
+  if (typingInterval) clearInterval(typingInterval);
+
+  document.getElementById('callIdHeader').textContent = s.callId;
+  const isCrit = s.utcs.level === 'CRITICAL';
+
+  // Alert
+  document.getElementById('alertArea').innerHTML = isCrit ?
+    `<div class="alert"><span class="alert-icon">🚨</span><span class="alert-text">CRITICAL THREAT — UTCS: ${s.utcs.score}</span><span style="font-size:.65rem;color:var(--muted)">${s.callId}</span></div>` : '';
+
+  // Alert feed
+  const alerts = [];
+  if (isCrit) alerts.push(`🚨 CRITICAL THREAT — UTCS: ${s.utcs.score}`);
+  if (s.keywords.some(k=>k.tier===1)) alerts.push(`🔑 Tier-1 keywords: ${s.keywords.filter(k=>k.tier===1).length} hits`);
+  if (s.noise) alerts.push(`🔊 Background threat: SCREAMING (${s.noise.screaming}%)`);
+  
+  document.getElementById('alertFeed').innerHTML = alerts.length ?
+    `<h4 style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:6px">🔔 Active Alerts</h4>` +
+    alerts.map(a => `<div class="evt ec"><span class="em" style="font-weight:600;color:var(--red)">${a}</span></div>`).join('') : '';
+
+  // Events
+  document.getElementById('eventLog').innerHTML =
+    `<div class="evt ${isCrit?'ec':'ei'}"><span class="et">${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span><span class="em">${s.callId}: ${s.summary.substring(0,50)}</span></div>`;
+
+  // Call list
+  document.getElementById('callList').innerHTML =
+    `<div class="card active ${isCrit?'critical':''}"><div style="display:flex;justify-content:space-between"><span class="cid">${s.callId}</span><span class="ubadge ${isCrit?'uc':'ul'}">${s.utcs.score}</span></div><div style="font-size:.8rem;font-weight:600;margin-top:4px">${s.caller}</div><p style="font-size:.65rem;color:var(--muted);margin-top:4px">${s.summary.substring(0,55)}...</p></div>`;
+
+  // Build center
+  const kwHtml = s.keywords.map(k => `<span class="kw kw${k.tier}">${k.kw}</span>`).join('');
+  const emotionHtml = [{l:'Panic',v:s.emotion.panic,c:'#ef4444'},{l:'Fear',v:s.emotion.fear,c:'#f97316'},{l:'Distress',v:s.emotion.distress,c:'#eab308'},{l:'Calm',v:s.emotion.calm,c:'#22c55e'}]
+    .map(e => `<div class="ebar"><span class="l">${e.l}</span><div class="b"><div class="bf" style="width:${e.v}%;background:${e.c}"></div></div><span class="v">${e.v}%</span></div>`).join('');
+  
+  let noiseHtml = '<span style="font-size:.65rem;color:var(--muted)">No background threat</span>';
+  if (s.noise) {
+    noiseHtml = [{l:'Screaming',v:s.noise.screaming,c:'#ef4444'},{l:'Struggle',v:s.noise.struggle,c:'#f97316'},{l:'Crying',v:s.noise.crying,c:'#eab308'}]
+      .map(n=>`<div class="ebar"><span class="l">${n.l}</span><div class="b"><div class="bf" style="width:${n.v}%;background:${n.c}"></div></div><span class="v">${n.v}%</span></div>`).join('') +
+      `<div style="margin-top:4px;padding:3px 6px;border-radius:4px;background:rgba(239,68,68,.1);font-size:.6rem;font-weight:700;color:var(--red);text-align:center">⚠ THREAT: SCREAMING</div>`;
+  }
+
+  document.getElementById('centerPanel').innerHTML = `
+    <div class="utcs-box ${isCrit?'crit':''}">
+      <div class="slabel">Unified Threat Confidence Score</div>
+      <div class="score" style="color:${s.utcs.color}" id="scoreNum">0</div>
+      <div class="slevel" style="color:${s.utcs.color}">${s.utcs.level}</div>
+    </div>
+    <div class="streams">
+      <div class="scard"><h4>Stream A — Keywords</h4><div style="font-size:.65rem;color:var(--muted);margin-bottom:4px">Aho-Corasick • ${s.keywords.length} hits</div>${kwHtml}</div>
+      <div class="scard"><h4>Stream B — Emotion</h4><div style="font-size:.65rem;color:var(--muted);margin-bottom:4px">OpenSMILE + CNN</div>${emotionHtml}</div>
+      <div class="scard"><h4>Stream C — Background</h4><div style="font-size:.65rem;color:var(--muted);margin-bottom:4px">Noise Analysis</div>${noiseHtml}</div>
+    </div>
+    <div class="tbox">
+      <h3>🎙️ Live Transcript <span style="padding:2px 6px;border-radius:8px;font-size:.6rem;background:rgba(139,92,246,.15);color:var(--purple);margin-left:6px">🌐 ${s.langLabel}</span></h3>
+      <div class="ttext" id="transcriptText"></div>
+    </div>
+    <div class="aibox">
+      <h3>🤖 AI Interpretation</h3>
+      <div class="af"><div class="af-l">🎯 Intent</div><div class="af-v">${s.intent}</div></div>
+      <div class="af"><div class="af-l">📝 Summary</div><div class="af-v">${s.summary}</div></div>
+      <div class="af"><div class="af-l">⚡ Urgency</div><div class="af-v" style="color:${s.urgency==='critical'?'var(--red)':s.urgency==='high'?'var(--orange)':'var(--yellow)'};font-weight:700;text-transform:uppercase">${s.urgency}</div></div>
+      <div class="af"><div class="af-l">📍 Location</div><div class="af-v">${s.location}</div></div>
+      <div class="af"><div class="af-l">🏛️ Department</div><div class="af-v" style="color:var(--cyan);font-weight:600">${s.department || 'General'}</div></div>
+      <div class="af"><div class="af-l">🗣️ Dialect Zone</div><div class="af-v">${s.dialect_zone === 'old_mysore' ? 'Old Mysore (ಹಳೆ ಮೈಸೂರು)' : s.dialect_zone === 'north_karnataka' ? 'North Karnataka (ಉತ್ತರ ಕರ್ನಾಟಕ)' : s.dialect_zone === 'hindi_belt' ? 'Hindi Belt (Romanized + Devanagari)' : 'General'}</div></div>
+      <div class="af"><div class="af-l">🔧 Action</div><div class="af-v">${s.action}</div></div>
+    </div>
+    <div class="vbox">
+      <h3>✅ Verification Loop</h3>
+      <div class="vtext">"${s.verification}"</div>
+      <div style="font-size:.65rem;color:var(--muted);margin-bottom:8px">🔊 Coqui TTS → Spoken back to citizen</div>
+      <div class="vbtns" id="vbtns">
+        <button class="vbtn vy" onclick="handleVerify('yes')">✓ Yes</button>
+        <button class="vbtn vn" onclick="handleVerify('no')">✗ No</button>
+        <button class="vbtn vp" onclick="handleVerify('partial')">↻ Partially</button>
+      </div>
+    </div>
+    ${isCrit ? '<button class="takeover" onclick="handleTakeover()">🔴 TAKE OVER CALL</button>' : ''}
+  `;
+
+  // Animate score
+  let current = 0;
+  const target = s.utcs.score;
+  const el = document.getElementById('scoreNum');
+  const dur = 800;
+  const start = performance.now();
+  function animateScore(t) {
+    const p = Math.min((t - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased);
+    if (p < 1) requestAnimationFrame(animateScore);
+  }
+  requestAnimationFrame(animateScore);
+
+  // Typing animation
+  const tEl = document.getElementById('transcriptText');
+  let idx = 0;
+  tEl.innerHTML = '<span class="cursor"></span>';
+  typingInterval = setInterval(() => {
+    if (idx < s.transcript.length) {
+      tEl.innerHTML = s.transcript.substring(0, idx + 1) + '<span class="cursor"></span>';
+      idx++;
+    } else {
+      clearInterval(typingInterval);
+      tEl.innerHTML = s.transcript;
+    }
+  }, 25);
+}
+
+function handleVerify(type) {
+  const el = document.getElementById('vbtns');
+  if (type === 'yes') {
+    el.innerHTML = '<div style="padding:8px;border-radius:6px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);font-size:.75rem;color:var(--green)">✅ Confirmed → Summary stored. Feedback sent to learning pipeline.</div>';
+  } else if (type === 'no') {
+    el.innerHTML = '<div style="padding:8px;border-radius:6px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);font-size:.75rem;color:var(--red)">❌ Unconfirmed → Flagged for human takeover. AI steps back.</div>';
+  } else {
+    el.innerHTML = '<div style="padding:8px;border-radius:6px;background:rgba(234,179,8,.1);border:1px solid rgba(234,179,8,.2);font-size:.75rem;color:var(--yellow)">↻ Partial corrections noted → Reprocessing with corrections.</div>';
+  }
+}
+
+function handleTakeover() {
+  event.target.outerHTML = '<div style="padding:16px;border-radius:10px;text-align:center;background:rgba(239,68,68,.1);border:2px solid var(--red)"><div style="font-size:2rem;margin-bottom:6px">🔴</div><div style="font-weight:800;font-size:1rem;color:var(--red)">HUMAN TAKEOVER ACTIVE</div><div style="font-size:.7rem;color:var(--muted);margin-top:4px">AI has stepped back. Agent in direct control.</div></div>';
+}
+</script>
+</body>
+</html>

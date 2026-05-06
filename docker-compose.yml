@@ -1,0 +1,55 @@
+# VaakSetu — One Command to Run Entire Project
+# docker-compose up --build
+# This spins up: backend (FastAPI:8000) + frontend (Vite:5173)
+
+version: "3.9"
+
+services:
+  # ── Backend: FastAPI + Whisper + Claude + all AI engines ──
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: vaaksetu-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=sqlite:///./vaaksetu.db
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=true
+    volumes:
+      - ./backend:/app          # Hot reload during development
+      - db-data:/app/db         # Persist database
+      - audio-cache:/app/audio_cache  # Persist audio cache
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # ── Frontend: React + Vite dev server ──
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: vaaksetu-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src       # Hot reload source files
+      - ./frontend/index.html:/app/index.html
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - VITE_API_URL=http://backend:8000
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  audio-cache:

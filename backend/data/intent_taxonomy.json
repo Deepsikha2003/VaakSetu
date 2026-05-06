@@ -1,0 +1,30 @@
+{
+  "categories": [
+    {"id": "infrastructure.road", "label": "Road/Pothole Issue", "department": "BBMP/PWD"},
+    {"id": "infrastructure.water", "label": "Water Supply Issue", "department": "BWSSB"},
+    {"id": "infrastructure.electricity", "label": "Electricity Issue", "department": "BESCOM"},
+    {"id": "infrastructure.drainage", "label": "Drainage/Sewage", "department": "BBMP"},
+    {"id": "infrastructure.garbage", "label": "Garbage/Sanitation", "department": "BBMP"},
+    {"id": "infrastructure.street_light", "label": "Street Light", "department": "BBMP"},
+    {"id": "safety.domestic_violence", "label": "Domestic Violence", "department": "Police/WPS"},
+    {"id": "safety.assault", "label": "Assault/Attack", "department": "Police"},
+    {"id": "safety.harassment", "label": "Harassment", "department": "Police"},
+    {"id": "safety.stalking", "label": "Stalking", "department": "Police/Cyber"},
+    {"id": "safety.robbery", "label": "Robbery/Theft", "department": "Police"},
+    {"id": "medical.emergency", "label": "Medical Emergency", "department": "108 Ambulance"},
+    {"id": "medical.hospital", "label": "Hospital Complaint", "department": "Health Dept"},
+    {"id": "medical.health_hazard", "label": "Health Hazard", "department": "BBMP Health"},
+    {"id": "administrative.corruption", "label": "Corruption/Bribery", "department": "ACB/Lokayukta"},
+    {"id": "administrative.govt_office", "label": "Govt Office Complaint", "department": "Respective Dept"},
+    {"id": "administrative.document", "label": "Document Issue", "department": "Revenue Dept"},
+    {"id": "environmental.noise", "label": "Noise Pollution", "department": "KSPCB"},
+    {"id": "environmental.air", "label": "Air Pollution", "department": "KSPCB"},
+    {"id": "environmental.dumping", "label": "Illegal Dumping", "department": "BBMP/KSPCB"},
+    {"id": "emergency.fire", "label": "Fire", "department": "Fire Dept/101"},
+    {"id": "emergency.flood", "label": "Flood/Waterlogging", "department": "BBMP/NDRF"},
+    {"id": "emergency.collapse", "label": "Building Collapse", "department": "NDRF/Fire"},
+    {"id": "emergency.gas_leak", "label": "Gas Leak", "department": "Fire/GAIL"},
+    {"id": "emergency.bomb_threat", "label": "Bomb Threat", "department": "Police/NSG"},
+    {"id": "emergency.kidnapping", "label": "Kidnapping", "department": "Police"}
+  ]
+}
